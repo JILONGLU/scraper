@@ -16,7 +16,7 @@ var sender;
 
 router.post("/start_polling", function (req, res, next) {
   var validEntries;
-  sender = setInterval(parseDataAndSend, 3000);
+  sender = setInterval(parseDataAndSend, 1800000);
 
   res.render("index", { title: "Price Scraper", polling: true });
 });
