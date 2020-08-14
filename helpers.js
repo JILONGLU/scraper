@@ -42,8 +42,8 @@ function parseDataAndSend() {
         var pathToAttachment = "attachment.png";
         var attachment = fs.readFileSync(pathToAttachment).toString("base64");
         const msg = {
-          // to: "markzhao@alphabowenergy.com",
-          to: "changbhc@gmail.com",
+          to: "markzhao@alphabowenergy.com",
+          // to: "changbhc@gmail.com",
           from: "magicallv@alphabowenergy.com",
           subject: "Forecast/Actual Report",
           html: `Valid Entries:
