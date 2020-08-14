@@ -4,8 +4,10 @@ block content
   h1= title
   p Welcome to #{title}
   
-  form(action="/start_polling", method="post") 
-    if polling === true
-     input(type="submit", value="Stop Polling") 
-    else
-      input(type="submit", value="Start Polling")
+  if polling == true
+    form(action="/stop_polling", method="post") 
+      input(type="submit", value="Stop Polling") 
+  else
+    form(action="/start_polling", method="post") 
+      input(type="submit", value="Start Polling") 
+      
