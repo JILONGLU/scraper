@@ -41,7 +41,7 @@ app.use(function (err, req, res, next) {
 
 var port = 9000;
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`App listening on port ${port}`);
 });
 
