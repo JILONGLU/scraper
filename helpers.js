@@ -1,4 +1,73 @@
-var cheerio = require("cheerio");
+const cheerio = require("cheerio");
+const sgMail = require("@sendgrid/mail");
+const axios = require("axios");
+const webshot = require("node-webshot");
+const fs = require("fs");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const siteUrl =
+  "http://ets.aeso.ca/ets_web/ip/Market/Reports/ActualForecastWMRQHReportServlet";
+
+const fetchData = new Promise((resolve, reject) => {
+  axios
+    .get(siteUrl)
+    .then((response) => {
+      resolve(response.data);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
+function parseDataAndSend() {
+  fetchData.then((pageData) => {
+    var $ = cheerio.load(pageData);
+    var table = $("table[border='1']");
+    var rows = $(table.find("tr"));
+    var dates = [];
+    var forecastPrices = [];
+    var actualPrices = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var data = getDateAndPrices($(rows[i]));
+      dates.push(data["date"]);
+      forecastPrices.push(data["forecastPrice"]);
+      actualPrices.push(data["actualPrice"]);
+    }
+    validEntries = findValidEntries(dates, forecastPrices, actualPrices);
+
+    if (validEntries.length !== 0) {
+      console.log("found valid entries: ", validEntries);
+      webshot(siteUrl, "attachment.png", function (err) {
+        var pathToAttachment = "attachment.png";
+        var attachment = fs.readFileSync(pathToAttachment).toString("base64");
+        const msg = {
+          // to: "markzhao@alphabowenergy.com",
+          to: "changbhc@gmail.com",
+          from: "magicallv@alphabowenergy.com",
+          subject: "Forecast/Actual Report",
+          html: `Valid Entries:
+          ${validEntries.map((entry) => {
+            return JSON.stringify(entry.date);
+          })}`,
+          attachments: [
+            {
+              content: attachment,
+              filename: "attachment.png",
+              type: "image/png",
+              disposition: "attachment",
+            },
+          ],
+        };
+        sgMail.send(msg);
+        console.log("email sent to markzhao@alphabowenergy.com");
+      });
+    } else {
+      validEntries = [];
+      console.log("found no valid entries");
+    }
+  });
+}
 
 // Parses DOM into objects we want (dates, forecastPrices, actualPrices)
 function getDateAndPrices(row) {
@@ -34,4 +103,4 @@ function findValidEntries(dates, forecasts, actuals) {
   });
 }
 
-module.exports = { getDateAndPrices, findValidEntries };
+module.exports = { getDateAndPrices, findValidEntries, parseDataAndSend };
