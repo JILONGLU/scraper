@@ -4,10 +4,7 @@ block content
   h1= title
   p Welcome to #{title}
   
-  p Entries:
-    | #{validEntries ? validEntries : 'There are no entries found.'}
-  
-  form(action="/start_polling", method="post")
+  form(action="/start_polling", method="post") 
     if polling === true
      input(type="submit", value="Stop Polling") 
     else
