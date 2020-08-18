@@ -41,26 +41,32 @@ function parseDataAndSend() {
       webshot(siteUrl, "attachment.png", function (err) {
         var pathToAttachment = "attachment.png";
         var attachment = fs.readFileSync(pathToAttachment).toString("base64");
-        const msg = {
-          to: "markzhao@alphabowenergy.com",
-          // to: "changbhc@gmail.com",
-          from: "magicallv@alphabowenergy.com",
-          subject: "Forecast/Actual Report",
-          html: `Valid Entries:
-          ${validEntries.map((entry) => {
-            return JSON.stringify(entry.date);
-          })}`,
-          attachments: [
-            {
-              content: attachment,
-              filename: "attachment.png",
-              type: "image/png",
-              disposition: "attachment",
-            },
-          ],
-        };
-        sgMail.send(msg);
-        console.log("email sent to markzhao@alphabowenergy.com");
+        let emails = [
+          "marymoyer@alphabowenergy.com",
+          "kevinklimuk@alphabowenergy.com",
+          "markzhao@alphabowenergy.com",
+        ];
+        emails.forEach((email) => {
+          const msg = {
+            to: email,
+            from: "magicallv@alphabowenergy.com",
+            subject: "Forecast/Actual Report",
+            html: `Valid Entries:
+            ${validEntries.map((entry) => {
+              return JSON.stringify(entry.date);
+            })}`,
+            attachments: [
+              {
+                content: attachment,
+                filename: "attachment.png",
+                type: "image/png",
+                disposition: "attachment",
+              },
+            ],
+          };
+          sgMail.send(msg);
+          console.log(`email sent to ${email}`);
+        });
       });
     } else {
       validEntries = [];
@@ -89,7 +95,7 @@ function getDateAndPrices(row) {
 function findValidEntries(dates, forecasts, actuals) {
   var indexes = [];
   for (i = 0; i < forecasts.length; i++) {
-    if (forecasts[i] >= 200 && actuals[i] >= 100) {
+    if (forecasts[i] >= 50 && actuals[i] >= 40) {
       indexes.push(i);
     }
   }
