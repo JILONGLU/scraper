@@ -91,11 +91,11 @@ function getDateAndPrices(row) {
 }
 
 // Returns an array of objects containing the entries that are valid.
-// Entry is valid if forecastPrice >= 200 && actualPrice >= 100
+// Entry is valid if forecastPrice >= 200 || actualPrice >= 100
 function findValidEntries(dates, forecasts, actuals) {
   var indexes = [];
   for (i = 0; i < forecasts.length; i++) {
-    if (forecasts[i] >= 50 && actuals[i] >= 40) {
+    if (forecasts[i] >= 50 || actuals[i] >= 40) {
       indexes.push(i);
     }
   }
