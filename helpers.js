@@ -49,7 +49,7 @@ function parseDataAndSend() {
         emails.forEach((email) => {
           const msg = {
             to: email,
-            from: "magicallv@alphabowenergy.com",
+            from: "itsupport@alphabowenergy.com",
             subject: "Forecast/Actual Report",
             html: `Valid Entries:
             ${validEntries.map((entry) => {
