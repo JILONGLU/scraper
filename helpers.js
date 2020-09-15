@@ -95,7 +95,7 @@ function getDateAndPrices(row) {
 function findValidEntries(dates, forecasts, actuals) {
   var indexes = [];
   for (i = 0; i < forecasts.length; i++) {
-    if (forecasts[i] >= 50 || actuals[i] >= 40) {
+    if (forecasts[i] >= 100 || actuals[i] >= 200) {
       indexes.push(i);
     }
   }
