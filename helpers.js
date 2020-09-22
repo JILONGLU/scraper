@@ -50,7 +50,7 @@ function parseDataAndSend() {
           const msg = {
             to: email,
             from: "itsupport@alphabowenergy.com",
-            subject: "Forecast/Actual Report",
+            subject: "AESO Report",
             html: `Valid Entries:
             ${validEntries.map((entry) => {
               return JSON.stringify(entry.date);
