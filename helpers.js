@@ -20,7 +20,9 @@ const fetchData = new Promise((resolve, reject) => {
 });
 
 function parseDataAndSend() {
+  console.log("Request new data from site");
   fetchData.then((pageData) => {
+    console.log("Retrieved new data from site");
     var $ = cheerio.load(pageData);
     var table = $("table[border='1']");
     var rows = $(table.find("tr"));
