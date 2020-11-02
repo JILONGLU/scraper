@@ -47,9 +47,9 @@ app.use(function (err, req, res, next) {
 var port = 9000;
 
 app.listen(process.env.PORT || port, () => {
-  parseDataAndSend();
-  setInterval(parseDataAndSend, 1 * hour);
   console.log(`App listening on port ${port}`);
+  setInterval(parseDataAndSend, 1 * hour);
+  parseDataAndSend();
 });
 
 module.exports = app;
