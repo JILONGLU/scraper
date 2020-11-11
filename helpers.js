@@ -47,6 +47,8 @@ function parseDataAndSend() {
           "marymoyer@alphabowenergy.com",
           "kevinklimuk@alphabowenergy.com",
           "markzhao@alphabowenergy.com",
+          "deankaiser@alphabowenergy.com",
+          "marvinwieler@alphabowenergy.com",
         ];
         emails.forEach((email) => {
           const msg = {
